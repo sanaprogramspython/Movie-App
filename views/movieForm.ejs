@@ -1,0 +1,38 @@
+<section class="page-header">
+  <h1 class="page-title"><%= isEditing ? 'Edit Movie' : 'Add Movie' %></h1>
+  <div class="page-actions"><a href="/movies" class="btn btn-secondary">Back to list</a></div>
+</section>
+<section class="form-card">
+    <form action="<%= isEditing ? `/movies/${movie._id}` : '/movies' %>" method="POST">
+      <div class="form-row">
+        <label for="title" class="form-label">Title</label>
+        <input class="form-input" id="title" name="title" type="text" value="<%= movie.title || '' %>" required maxlength="160">
+      </div>
+      <div class="form-columns">
+        <div class="form-row">
+          <label for="year" class="form-label">Year</label>
+          <input class="form-input" id="year" name="year" type="number" value="<%= movie.year || '' %>" min="1888" max="2036" required>
+        </div>
+        <div class="form-row">
+          <label for="genre" class="form-label">Genre</label>
+          <input class="form-input" id="genre" name="genre" type="text" value="<%= movie.genre || '' %>" required maxlength="80" placeholder="Drama, Comedy...">
+        </div>
+        <div class="form-row">
+          <label for="rating" class="form-label">Rating (0-10)</label>
+          <input class="form-input" id="rating" name="rating" type="number" value="<%= movie.rating ?? '' %>" min="0" max="10" step="0.1" placeholder="0 - 10">
+        </div>
+      </div>
+      <div class="form-row">
+        <label for="posterUrl" class="form-label">Poster URL</label>
+        <input class="form-input" id="posterUrl" name="posterUrl" type="url" value="<%= movie.posterUrl || '' %>" placeholder="https://example.com/poster.jpg">
+      </div>
+      <div class="form-row">
+        <label for="description" class="form-label">Description</label>
+        <textarea class="form-textarea" id="description" name="description" rows="7" maxlength="3000" placeholder="What makes this movie memorable?"><%= movie.description || '' %></textarea>
+      </div>
+      <div class="form-actions">
+        <button class="btn btn-primary" type="submit"><%= isEditing ? 'Update Movie' : 'Add Movie' %></button>
+        <a class="btn btn-secondary" href="/movies">Cancel</a>
+      </div>
+    </form>
+</section>

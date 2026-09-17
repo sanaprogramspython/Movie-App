@@ -1,0 +1,40 @@
+<section class="page-header">
+  <h1 class="page-title">All Movies</h1>
+  <div class="page-actions">
+    <a href="/movies/new" class="btn btn-primary">Add Movie</a>
+  </div>
+</section>
+
+<section class="movie-grid">
+  <% if (movies && movies.length) { %>
+    <% movies.forEach((movie) => { %>
+      <article class="movie-card">
+        <a href="/movies/<%= movie._id %>">
+          <img class="movie-poster" src="<%= movie.posterUrl || '/images/default-poster.svg' %>" alt="<%= movie.title %> poster" onerror="this.src='/images/default-poster.svg'">
+        </a>
+        <div class="movie-card-body">
+          <div class="movie-title-row">
+            <h2 class="movie-title"><%= movie.title %></h2>
+            <span class="movie-year"><%= movie.year %></span>
+          </div>
+          <div class="movie-meta">
+            <span><strong>Genre:</strong> <%= movie.genre %></span>
+            <% if (movie.rating !== undefined && movie.rating !== null) { %><span class="movie-rating"><%= movie.rating %>/10</span><% } %>
+          </div>
+          <p class="movie-description"><%= movie.description ? movie.description.slice(0, 120) + (movie.description.length > 120 ? '...' : '') : 'No description provided.' %></p>
+          <div class="movie-card-actions">
+            <div class="movie-card-actions-left">
+              <a href="/movies/<%= movie._id %>" class="btn btn-secondary btn-sm">View</a>
+              <a href="/movies/<%= movie._id %>/edit" class="btn btn-primary btn-sm">Edit</a>
+            </div>
+            <form action="/movies/<%= movie._id %>/delete" method="POST" class="movie-card-actions-right delete-form">
+              <button type="submit" class="btn btn-danger btn-sm">Delete</button>
+            </form>
+          </div>
+        </div>
+      </article>
+    <% }) %>
+  <% } else { %>
+    <p>No movies found. Start by adding one!</p>
+  <% } %>
+</section>

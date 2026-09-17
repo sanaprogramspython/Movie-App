@@ -1,0 +1,22 @@
+<section class="page-header">
+  <h1 class="page-title"><%= movie.title %></h1>
+  <div class="page-actions">
+    <a href="/movies" class="btn btn-secondary">Back to list</a>
+    <a href="/movies/<%= movie._id %>/edit" class="btn btn-primary">Edit</a>
+    <form action="/movies/<%= movie._id %>/delete" method="POST" class="delete-form">
+      <button type="submit" class="btn btn-danger">Delete</button>
+    </form>
+  </div>
+</section>
+<section class="movie-detail">
+  <div class="movie-detail-poster"><img src="<%= movie.posterUrl || '/images/default-poster.svg' %>" alt="<%= movie.title %> poster" onerror="this.src='/images/default-poster.svg'"></div>
+  <div class="movie-detail-info">
+    <div class="movie-detail-title-row"><h2 class="movie-detail-title"><%= movie.title %></h2><span class="movie-detail-year"><%= movie.year %></span></div>
+    <div class="movie-detail-meta">
+      <p><strong>Genre:</strong> <%= movie.genre %></p>
+      <% if (movie.rating !== undefined && movie.rating !== null) { %><p><strong>Rating:</strong> <span class="movie-rating"><%= movie.rating %>/10</span></p><% } %>
+      <p><strong>Added:</strong> <%= movie.createdAt ? movie.createdAt.toDateString() : '' %></p>
+    </div>
+    <div class="movie-detail-description"><p><%= movie.description || 'No description provided.' %></p></div>
+  </div>
+</section>

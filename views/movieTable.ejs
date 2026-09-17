@@ -1,0 +1,62 @@
+<section class="page-header">
+  <div>
+    <h1 class="page-title">Movie Data</h1>
+    <p class="table-intro">All movies currently stored in MongoDB.</p>
+  </div>
+  <div class="page-actions">
+    <a href="/movies" class="btn btn-secondary">Card View</a>
+    <a href="/movies/new" class="btn btn-primary">Add Movie</a>
+  </div>
+</section>
+
+<section class="table-panel" aria-label="Movie database table">
+  <% if (movies.length) { %>
+    <div class="table-scroll">
+      <table class="movie-table">
+        <thead>
+          <tr>
+            <th scope="col">Poster</th>
+            <th scope="col">Title</th>
+            <th scope="col">Year</th>
+            <th scope="col">Genre</th>
+            <th scope="col">Rating</th>
+            <th scope="col">Poster URL</th>
+            <th scope="col">Description</th>
+            <th scope="col">Added</th>
+            <th scope="col">Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          <% movies.forEach((movie) => { %>
+            <tr>
+              <td>
+                <img class="table-poster" src="<%= movie.posterUrl || '/images/default-poster.svg' %>" alt="<%= movie.title %> poster" onerror="this.src='/images/default-poster.svg'">
+              </td>
+              <td class="table-title"><%= movie.title %></td>
+              <td><%= movie.year %></td>
+              <td><%= movie.genre %></td>
+              <td><%= movie.rating !== undefined && movie.rating !== null ? `${movie.rating}/10` : 'Not rated' %></td>
+              <td class="poster-url"><%= movie.posterUrl || 'Default poster' %></td>
+              <td class="table-description"><%= movie.description || 'No description' %></td>
+              <td><%= movie.createdAt ? movie.createdAt.toLocaleDateString() : '' %></td>
+              <td>
+                <div class="table-actions">
+                  <a class="btn btn-secondary btn-sm" href="/movies/<%= movie._id %>">View</a>
+                  <a class="btn btn-primary btn-sm" href="/movies/<%= movie._id %>/edit">Edit</a>
+                  <form action="/movies/<%= movie._id %>/delete" method="POST" class="delete-form">
+                    <button class="btn btn-danger btn-sm" type="submit">Delete</button>
+                  </form>
+                </div>
+              </td>
+            </tr>
+          <% }) %>
+        </tbody>
+      </table>
+    </div>
+  <% } else { %>
+    <div class="table-empty">
+      <p>No movies are stored yet.</p>
+      <a class="btn btn-primary" href="/movies/new">Add Movie</a>
+    </div>
+  <% } %>
+</section>
